@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.2] - 2024-09-28 ([#5](https://github.com/soria-lucas/qrsec_ci_cd/pull/5))
+### Added
+- Frontend added to docker-compose.yaml.
+- Frontend built from multi-stage Dockerfile.
+- Cloudflare Tunnel added to docker-compose.yaml.
+  - This also provides ssl certificate (allowing the frontend to use the camera).
+- Reverse proxy added to docker-compose.yaml.
+
 ## [0.0.1] - 2024-02-13 ([#3](https://github.com/soria-lucas/qrsec_ci_cd/pull/3))
 ### Added
 - Backend added to docker-compose.yaml.
