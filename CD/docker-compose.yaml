@@ -6,8 +6,8 @@ services:
     image: mongo:7.0.5
     container_name: mongodb
     restart: unless-stopped
-    # ports:
-    #   - 27017:27017
+    ports:
+      - 27017:27017
     volumes:
       - /home/lucas/mongo_db/qrsec/db:/data/db                  # Change in prod
       - /home/lucas/mongo_db/qrsec/configdb:/data/configdb      # Change in prod
