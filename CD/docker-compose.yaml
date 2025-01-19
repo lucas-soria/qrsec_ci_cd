@@ -33,7 +33,7 @@ services:
 # ---     Backend     ---
 
   backend:
-    image: qrsec_backend:0.0.3
+    image: qrsec_backend:${BACKEND_VERSION}
     build:
       context: ../../qrsec_backend
       dockerfile: ./Dockerfile
@@ -90,7 +90,7 @@ services:
 # ---     Frontend     ---
 
   frontend:
-    image: qrsec_frontend:0.0.1
+    image: qrsec_frontend:${FRONTEND_VERSION}
     build:
       context: ../../qrsec_frontend
       dockerfile: ./Dockerfile
