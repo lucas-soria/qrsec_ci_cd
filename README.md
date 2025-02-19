@@ -35,5 +35,5 @@ docker compose up -d --force-recreate
 Or do all at once:
 
 ```shell
-docker compose rm --all && docker compose build --no-cache && docker compose up -d --force-recreate
+docker compose rm --all && docker compose build --no-cache && yes | docker image prune --filter="dangling=true" && docker compose up -d --force-recreate
 ```

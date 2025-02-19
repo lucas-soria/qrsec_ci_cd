@@ -38,7 +38,7 @@ services:
       context: ../../qrsec_backend
       dockerfile: ./Dockerfile
       tags:
-        - 'qrsec_backend:0.0.2'
+        - 'qrsec_backend:${BACKEND_VERSION}'
         - 'qrsec_backend:latest'
     container_name: qrsec_backend
     restart: unless-stopped
@@ -50,14 +50,10 @@ services:
 
       - API_PATH=${API_PATH}
       - API_PATH_INVITES=${API_PATH_INVITES}
-      - API_PATH_ADMIN_INVITES=${API_PATH_ADMIN_INVITES}
       - API_PATH_PUBLIC_INVITES=${API_PATH_PUBLIC_INVITES}
       - API_PATH_GUESTS=${API_PATH_GUESTS}
-      - API_PATH_ADMIN_GUESTS=${API_PATH_ADMIN_GUESTS}
       - API_PATH_USERS=${API_PATH_USERS}
-      - API_PATH_ADMIN_USERS=${API_PATH_ADMIN_USERS}
       - API_PATH_ADDRESSES=${API_PATH_ADDRESSES}
-      - API_PATH_ADMIN_ADDRESSES=${API_PATH_ADMIN_ADDRESSES}
 
       - SPRINGDOC_API_DOCS_PATH=${SPRINGDOC_API_DOCS_PATH}
       - SPRINGDOC_SWAGGER_UI_PATH=${SPRINGDOC_SWAGGER_UI_PATH}
@@ -95,7 +91,7 @@ services:
       context: ../../qrsec_frontend
       dockerfile: ./Dockerfile
       tags:
-        - 'qrsec_frontend:0.0.1'
+        - 'qrsec_frontend:${FRONTEND_VERSION}'
         - 'qrsec_frontend:latest'
       args:
         - REACT_APP_WHOLE_FRONTEND_BASE=${REACT_APP_WHOLE_FRONTEND_BASE}
@@ -112,7 +108,7 @@ services:
       - REACT_APP_MAPS_API=${REACT_APP_MAPS_API}
       - REACT_APP_GOOGLE_OAUTH_CLIENT_ID=${REACT_APP_GOOGLE_OAUTH_CLIENT_ID}
 
-# ---     Cloudflare Tunnel     ---#
+# ---     Cloudflare Tunnel     ---
 
   cloudflare_tunnel:
     image: cloudflare/cloudflared:2024.9.1
