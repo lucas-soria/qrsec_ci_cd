@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.0.4] - 2024-02-18 ([#9](https://github.com/lucas-soria/qrsec_ci_cd/pull/9))
+## [1.0.0] - 2024-03-03 ([#9](https://github.com/lucas-soria/qrsec_ci_cd/pull/9))
 ### Changed
 - Service versions are configurable.
 - README.md command now deleted 'dangling' images when building.
@@ -15,6 +15,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 - Useless /admin urls from backend env variables.
+- Mongo Express service.
+- Port exposed from mongodb.
+
+### Added
+- New /auth urls to backend env variables.
+- New DB volumes.
 
 ## [0.0.3] - 2024-02-13 ([#7](https://github.com/lucas-soria/qrsec_ci_cd/pull/7))
 ### Added
