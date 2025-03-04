@@ -6,29 +6,29 @@ services:
     image: mongo:7.0.5
     container_name: mongodb
     restart: unless-stopped
-    ports:
-      - 27017:27017
+    # ports:
+    #   - 27017:27017
     volumes:
-      - /home/lucas/mongo_db/qrsec/db:/data/db                  # Change in prod
-      - /home/lucas/mongo_db/qrsec/configdb:/data/configdb      # Change in prod
+      - qrsec_db:/data/db               # /home/lucas/mongo_db/qrsec/db:/data/db
+      - qrsec_configdb:/data/configdb   # /home/lucas/mongo_db/qrsec/configdb:/data/configdb
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${DB_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${DB_PASSWORD}
 
-  mongo_express:                                                # Remove in prod
-    image: mongo-express:1.0.2
-    container_name: mongo_express
-    restart: unless-stopped
-    ports:
-      - 8880:8081
-    links:
-      - mongodb
-    environment:
-      - ME_CONFIG_MONGODB_ADMINUSERNAME=${DB_USERNAME}
-      - ME_CONFIG_MONGODB_ADMINPASSWORD=${DB_PASSWORD}
-      - ME_CONFIG_MONGODB_SERVER=${DB_SERVER}
-      - ME_CONFIG_BASICAUTH_USERNAME=${DB_ADMIN_USERNAME}
-      - ME_CONFIG_BASICAUTH_PASSWORD=${DB_ADMIN_PASSWORD}
+  # mongo_express:
+  #   image: mongo-express:1.0.2
+  #   container_name: mongo_express
+  #   restart: unless-stopped
+  #   ports:
+  #     - 8880:8081
+  #   links:
+  #     - mongodb
+  #   environment:
+  #     - ME_CONFIG_MONGODB_ADMINUSERNAME=${DB_USERNAME}
+  #     - ME_CONFIG_MONGODB_ADMINPASSWORD=${DB_PASSWORD}
+  #     - ME_CONFIG_MONGODB_SERVER=${DB_SERVER}
+  #     - ME_CONFIG_BASICAUTH_USERNAME=${DB_ADMIN_USERNAME}
+  #     - ME_CONFIG_BASICAUTH_PASSWORD=${DB_ADMIN_PASSWORD}
 
 # ---     Backend     ---
 
@@ -38,7 +38,7 @@ services:
       context: ../../qrsec_backend
       dockerfile: ./Dockerfile
       tags:
-        - 'qrsec_backend:0.0.2'
+        - 'qrsec_backend:${BACKEND_VERSION}'
         - 'qrsec_backend:latest'
     container_name: qrsec_backend
     restart: unless-stopped
@@ -50,14 +50,11 @@ services:
 
       - API_PATH=${API_PATH}
       - API_PATH_INVITES=${API_PATH_INVITES}
-      - API_PATH_ADMIN_INVITES=${API_PATH_ADMIN_INVITES}
       - API_PATH_PUBLIC_INVITES=${API_PATH_PUBLIC_INVITES}
       - API_PATH_GUESTS=${API_PATH_GUESTS}
-      - API_PATH_ADMIN_GUESTS=${API_PATH_ADMIN_GUESTS}
       - API_PATH_USERS=${API_PATH_USERS}
-      - API_PATH_ADMIN_USERS=${API_PATH_ADMIN_USERS}
       - API_PATH_ADDRESSES=${API_PATH_ADDRESSES}
-      - API_PATH_ADMIN_ADDRESSES=${API_PATH_ADMIN_ADDRESSES}
+      - API_PATH_AUTH=${API_PATH_AUTH}
 
       - SPRINGDOC_API_DOCS_PATH=${SPRINGDOC_API_DOCS_PATH}
       - SPRINGDOC_SWAGGER_UI_PATH=${SPRINGDOC_SWAGGER_UI_PATH}
@@ -95,7 +92,7 @@ services:
       context: ../../qrsec_frontend
       dockerfile: ./Dockerfile
       tags:
-        - 'qrsec_frontend:0.0.1'
+        - 'qrsec_frontend:${FRONTEND_VERSION}'
         - 'qrsec_frontend:latest'
       args:
         - REACT_APP_WHOLE_FRONTEND_BASE=${REACT_APP_WHOLE_FRONTEND_BASE}
@@ -112,7 +109,7 @@ services:
       - REACT_APP_MAPS_API=${REACT_APP_MAPS_API}
       - REACT_APP_GOOGLE_OAUTH_CLIENT_ID=${REACT_APP_GOOGLE_OAUTH_CLIENT_ID}
 
-# ---     Cloudflare Tunnel     ---#
+# ---     Cloudflare Tunnel     ---
 
   cloudflare_tunnel:
     image: cloudflare/cloudflared:2024.9.1
@@ -138,3 +135,9 @@ services:
       - cloudflare_tunnel
     volumes: 
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
+
+# ---     Volumes     ---
+
+volumes:
+  qrsec_db:
+  qrsec_configdb:
